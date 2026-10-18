@@ -1,0 +1,33 @@
+services:
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    container_name: devops-backend
+    expose:
+      - "5000"
+    volumes:
+      - ./data:/app/data
+    environment:
+      - DATA_DIR=/app/data
+    networks:
+      - devops-net
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../fronten
+      dockerfile: Dockerfile
+    container_name: devops-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - devops-net
+    restart: unless-stopped
+
+networks:
+  devops-net:
+    driver: bridge
+
