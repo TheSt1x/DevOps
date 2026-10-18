@@ -16,7 +16,7 @@ services:
 
   frontend:
     build:
-      context: ../fronten
+      context: ../frontend
       dockerfile: Dockerfile
     container_name: devops-frontend
     ports:
