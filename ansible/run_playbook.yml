@@ -1,0 +1,24 @@
+---
+- name: Deploy microservices to remote node
+  hosts: remote
+  become: true
+
+  roles:
+    - role: deploy
+      tags: [deploy]
+
+  tasks:
+    - name: Stop microservices via docker compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_dir }}/DevOps"
+        state: absent
+      tags: [stop]
+
+    - name: Start microservices via docker compose
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_dir }}/DevOps"
+        state: present
+        build: always
+      environment:
+        BUILDX_BAKE_ENTITLEMENTS_FS: "0"
+      tags: [start]

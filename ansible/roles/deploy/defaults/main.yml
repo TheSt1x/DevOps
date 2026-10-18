@@ -1,0 +1,13 @@
+---
+app_dir: "/home/{{ ansible_user }}/devops-app"
+docker_compose_version: "2.24.0"
+
+backend_repo: "https://github.com/TheSt1x/backend.git"
+frontend_repo: "https://github.com/TheSt1x/frontend.git"
+devops_repo: "https://github.com/TheSt1x/DevOps.git"
+repo_branch: "main"
+
+
+docker_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+
+docker_repo_release: "noble"
