@@ -4,8 +4,8 @@ pipeline {
     environment {
         ANSIBLE_HOST_KEY_CHECKING = 'false'
         ANSIBLE_FORCE_COLOR = 'true'
-        HOST_USER = 'vboxuser'
-        PROJECT_DIR = '/home/vboxuser/Desktop/DevOps/Ansible'
+        HOST_USER = 'miriteam'
+        PROJECT_DIR = '/home/miriteam/Desktop/DevOps/Ansible'
     }
 
     stages {
