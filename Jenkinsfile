@@ -21,10 +21,7 @@ pipeline {
                 echo 'Этап 1: Установка ПО и клонирование репозиториев...'
                 sshagent(credentials: ['ansible-node-key']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${HOST_USER}@host.docker.internal "echo ok"
-                        cd ${PROJECT_DIR} && \
-                        source ~/ansible-venv/bin/activate && \
-                        ansible-playbook -i hosts-jenkins jenkins-playbook.yml --tags prepare
+                        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${HOST_USER}@host.docker.internal "cd ${PROJECT_DIR} && source ~/ansible-venv/bin/activate && ansible-playbook -i hosts-jenkins jenkins-playbook.yml --tags prepare"
                     '''
                 }
             }
@@ -35,10 +32,7 @@ pipeline {
                 echo 'Этап 2: Запуск контейнеров...'
                 sshagent(credentials: ['ansible-node-key']) {
                     sh '''
-                        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${HOST_USER}@host.docker.internal "echo ok"
-                        cd ${PROJECT_DIR} && \
-                        source ~/ansible-venv/bin/activate && \
-                        ansible-playbook -i hosts-jenkins jenkins-playbook.yml --tags deploy
+                        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${HOST_USER}@host.docker.internal "cd ${PROJECT_DIR} && source ~/ansible-venv/bin/activate && ansible-playbook -i hosts-jenkins jenkins-playbook.yml --tags deploy"
                     '''
                 }
             }
@@ -46,7 +40,11 @@ pipeline {
     }
 
     post {
-        success { echo 'Пайплайн успешно завершен!' }
-        failure { echo 'Ошибка выполнения пайплайна.' }
+        success {
+            echo 'Пайплайн успешно завершен!'
+        }
+        failure {
+            echo 'Ошибка выполнения пайплайна.'
+        }
     }
 }
